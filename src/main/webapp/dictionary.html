@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>词典</title>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+$(document).ready(
+	function() {
+		$.ajax({
+        	url: "http://192.168.107.200:8080/dictionary/pickedup",
+        	success : function(result) {
+        		$("#pickedup").append("<tr><th>词条</th><th>出现次数</th><th>子词条出现频次差异率</th><th>是否使用</th></tr>");
+        		$.each(result, function(i, item) {
+    				$("#pickedup").append("<tr><td>"+item.payload+"</td><td>"+item.refTime+"</td><td>"+item.subTermRefDiffRatio+"</td><td><input type='checkbox' id='pickedup"+i+"' checked='true'/></td></tr>");
+        		});
+			},
+			error : function(result) {
+				alert("sorry, 【精选】 terms not acquired...");
+			}
+    	});
+		$.ajax({
+        	url: "http://192.168.107.200:8080/dictionary/notbalanced",
+        	success : function(result) {
+        		$("#notbalanced").append("<tr><th>词条</th><th>出现次数</th><th>子词条出现频次差异率</th><th>是否使用</th></tr>");
+        		$.each(result, function(i, item) {
+    				$("#notbalanced").append("<tr><td>"+item.payload+"</td><td>"+item.refTime+"</td><td>"+item.subTermRefDiffRatio+"</td><td><input type='checkbox'/></td></tr>");
+        		});
+			},
+			error : function(result) {
+				alert("sorry, 【不平衡】 terms not acquired...");
+			}
+    	})
+		$.ajax({
+        	url: "http://192.168.107.200:8080/dictionary/lessref",
+        	success : function(result) {
+        		$("#lessref").append("<tr><th>词条</th><th>出现次数</th><th>子词条出现频次差异率</th><th>是否使用</th></tr>");
+        		$.each(result, function(i, item) {
+    				$("#lessref").append("<tr><td>"+item.payload+"</td><td>"+item.refTime+"</td><td>"+item.subTermRefDiffRatio+"</td><td><input type='checkbox'/></td></tr>");
+        		});
+			},
+			error : function(result) {
+				alert("sorry, 【低频】  terms not acquired...");
+			}
+    	})    	
+	}
+);
+</script>
+</head>
+<body>
+	<div>
+		<center><h1>精选词条</h1></center>
+		<br/>
+		<table id="pickedup" border="1" width="100%">
+		</table>
+	</div>
+	<div>
+		<center><h1>不平衡词条</h1></center>
+		<br/>
+		<table id="notbalanced" border="1" width="100%">
+		</table>
+	</div>
+	<div>
+		<center><h1>低频词条</h1></center>
+		<br/>
+		<table id="lessref" border="1" width="100%">
+		</table>
+	</div>	
+</body>
+</html>

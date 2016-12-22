@@ -1,0 +1,2 @@
+select attr_value from mbproduct.product_lib_attr_value where attr_key_id = 3 #or attr_key_id = 6
+and attr_value != '' and attr_value not like '%其他%' and attr_value not like '%其它%' and attr_value != '无';

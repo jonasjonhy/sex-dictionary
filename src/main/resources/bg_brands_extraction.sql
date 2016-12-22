@@ -1,0 +1,1 @@
+select cname from product_lib_brand where cname != '' and status = 1 and brand_id != 2;
